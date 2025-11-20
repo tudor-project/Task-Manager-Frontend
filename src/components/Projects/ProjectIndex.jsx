@@ -67,7 +67,7 @@ export const ProjectIndex = () => {
                                 </button>
                                 {openMenuId === project.id && (
                                     <div
-                                        className="absolute right-24 w-40 bg-white dark:bg-gray-700 shadow-md z-10 flex flex-col ">
+                                        className="absolute right-24 w-40 bg-white border border-gray-500 dark:bg-gray-700 dark:border-gray-400 shadow-md z-10 flex flex-col ">
                                         <Link to={`/projects/${project.id}/edit`}
                                               className="px-4 py-1 text-indigo-400 hover:text-indigo-700  text-center">
                                             Edit

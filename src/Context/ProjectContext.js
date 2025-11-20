@@ -34,6 +34,8 @@ export const ProjectProvider = ({children}) => {
     const [errors, setErrors] = useState({});
     const navigate = useNavigate();
     const [openMenuId, setMenuId] = useState(null);
+    // const [token, setToken] = useState(null);
+    const token = localStorage.getItem("token");
 
     const onChange = (e) => {
         const {name, value} = e.target;
@@ -41,12 +43,26 @@ export const ProjectProvider = ({children}) => {
     };
 
     const getProjects = async () => {
-        const apiProjects = await axios.get("projects");
-        setProjects(apiProjects.data.data);
+
+        if (token) {
+            const apiProjects = await axios.get("projects", {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            setProjects(apiProjects.data.data);
+        } else {
+            navigate("/login");
+        }
+
     };
 
     const getSingleProject = async (id) => {
-        const response = await axios.get("projects/" + id);
+        const response = await axios.get("projects/" + id, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
         const apiProject =  response.data.data;
         setProject(apiProject);
         setFormValues({
@@ -62,7 +78,11 @@ export const ProjectProvider = ({children}) => {
     const storeProject = async (e) =>{
         e.preventDefault();
         try {
-            await axios.post("projects", formValues);
+            await axios.post("projects", formValues, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
             setFormValues(initialData);
             navigate("/projects");
         }catch (e){
@@ -75,7 +95,11 @@ export const ProjectProvider = ({children}) => {
     const updateProject = async (e) => {
         e.preventDefault();
         try{
-            await axios.put("projects/" + project.id, formValues);
+            await axios.put("projects/" + project.id, formValues, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
             navigate("/projects");
         } catch(e){
             if (e.response.status === 422){
@@ -88,7 +112,11 @@ export const ProjectProvider = ({children}) => {
         if(!window.confirm("Are yoou sure?")){
             return;
         }
-        await axios.delete("projects/" + id);
+        await axios.delete("projects/" + id, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
         getProjects();
     }
 

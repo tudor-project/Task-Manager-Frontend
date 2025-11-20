@@ -16,11 +16,21 @@ const priorityMap = {
 
 export const TaskProvider = ({children}) => {
     const [tasks, setTasks] = useState([]);
+    const navigate = useNavigate();
+    const token = localStorage.getItem("token");
 
 
     const getTasks = async () => {
-        const apiTasks = await axios.get("tasks");
-        setTasks(apiTasks.data.data);
+        if (token) {
+            const apiTasks = await axios.get("tasks", {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
+            });
+            setTasks(apiTasks.data.data);
+        } else {
+            navigate("/login");
+        }
     }
 
 

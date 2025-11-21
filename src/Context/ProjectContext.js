@@ -22,9 +22,9 @@ const statusMap = {
     3: {text:"Canceled.", color:"bg-red-100 text-red-800"},
 }
 const priorityMap = {
-    0: {text:"⌃", color:"text-green-500"},
-    1: {text:"⌅", color:"text-yellow-500"},
-    2: {text:"⌆", color:"text-red-500"}
+    0: {color:"bg-green-500"},
+    1: {color:"bg-yellow-500"},
+    2: {color:"bg-red-500"}
 }
 
 export const ProjectProvider = ({children}) => {

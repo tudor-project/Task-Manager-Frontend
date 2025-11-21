@@ -30,7 +30,6 @@ export const TasksIndex = () => {
                         {tasksForStatus.map((task) => (
                             <div className="m-2 bg-white p-4 rounded shadow border space-y-3" key={task.id}>
                                 <div className="flex space-x-1">
-                                    {/*<div className="h-2 w-1/4 bg-yellow-400 rounded-full"></div>*/}
                                     <div className={`h-2 w-1/4 rounded-full ${priorityMap[task.priority].color}`}></div>
                                 </div>
 

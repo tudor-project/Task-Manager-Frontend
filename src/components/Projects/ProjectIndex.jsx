@@ -53,13 +53,10 @@ export const ProjectIndex = () => {
                                 </span>
                             </td>
                             <td className="px-6 py-4">
-                                <span
-                                    className={`px-2 py-0.5 border border-gray-500 rounded-full text-xl font-medium ${priorityMap[project.priority].color}`}>
-                                    {priorityMap[project.priority].text}
-                                </span>
+                                <div className={`h-2 w-full rounded-full ${priorityMap[project.priority].color}`}></div>
                             </td>
                             <td className="px-6 py-4">
-                                <button className="text-xl" onClick={() => {
+                            <button className="text-xl" onClick={() => {
                                     setMenuId(openMenuId === project.id ? null : project.id);
                                 }}
                                 >

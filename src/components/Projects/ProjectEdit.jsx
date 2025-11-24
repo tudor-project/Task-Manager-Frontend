@@ -11,7 +11,8 @@ export const ProjectEdit = () => {
         getSingleProject,
         updateProject,
         statusMap,
-        priorityMap
+        priorityMap,
+        toast
     } = useContext(ProjectContext);
     let {id} = useParams();
     useEffect(() => {
@@ -20,6 +21,11 @@ export const ProjectEdit = () => {
     }, [])
     return (
         <div className="mt-12">
+            {toast && (
+                <div className="fixed top-5 right-5 bg-red-600 text-white px-4 py-2 rounded shadow-lg animate-fade">
+                    {toast}
+                </div>
+            )}
             <form onSubmit={updateProject} className="max-w-md mx-auto p-4 bg-white shadow-md rounded-sm">
                 <div className="space-y-6">
                     <div className="mb-4">

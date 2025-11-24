@@ -3,7 +3,7 @@ import {Link, useNavigate} from "react-router-dom";
 import ProjectContext from "../../Context/ProjectContext";
 
 export const ProjectIndex = () => {
-    const {projects, getProjects, deleteProject, openMenuId, setMenuId, statusMap, priorityMap} = useContext(ProjectContext);
+    const {projects, getProjects, deleteProject, openMenuId, setMenuId, statusMap, priorityMap, toast} = useContext(ProjectContext);
     useEffect(() => {
         setMenuId(null);
         getProjects();
@@ -12,13 +12,18 @@ export const ProjectIndex = () => {
 
     return (
         <div className="flex flex-col w-full h-full">
-             {/*Table container takes as much width as possible*/}
+            {toast && (
+                <div className="fixed top-5 right-5 bg-red-600 text-white px-4 py-2 rounded shadow-lg animate-fade">
+                    {toast}
+                </div>
+            )}
             <div className="flex-1 overflow-x-auto">
                 <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                     <colgroup>
-                        <col style={{width: '60%'}}/>
+                        <col style={{width: '55%'}}/>
                         <col style={{width: '15%'}}/>
                         <col style={{width: '15%'}}/>
+                        <col style={{width: '5%'}}/>
                         <col style={{width: '5%'}}/>
                         <col style={{width: '5%'}}/>
                     </colgroup>
@@ -28,6 +33,7 @@ export const ProjectIndex = () => {
                         <th className="px-6 py-3">Deadline</th>
                         <th className="px-6 py-3">Status</th>
                         <th className="px-6 py-3">priority</th>
+                        <th className="px-6 py-3">Members</th>
                         <th className="px-6 py-3 text-xl ">&#8230;</th>
                     </tr>
                     </thead>
@@ -36,6 +42,7 @@ export const ProjectIndex = () => {
                         onClick={() => (navigate("/projects/create"))}
                         className="bg-white dark:bg-gray-800 border border-dashed dark:border-green-600 border-green-600 hover:bg-gray-500 hover:dark:bg-gray-700">
                         <td className="px-6 py-4 cursor-default text-green-600">+ New Project</td>
+                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -55,6 +62,28 @@ export const ProjectIndex = () => {
                             <td className="px-6 py-4">
                                 <div className={`h-2 w-full rounded-full ${priorityMap[project.priority].color}`}></div>
                             </td>
+
+                            <td className="px-6 py-4 flex">
+                                <img
+                                    className="w-8 h-8 rounded-full border-2 border-white"
+                                    src="https://randomuser.me/api/portraits/men/32.jpg"
+                                    alt="Avatar"
+                                />
+                                <img
+                                    className="w-8 h-8 rounded-full border-2 border-white -ml-3"
+                                    src="https://randomuser.me/api/portraits/men/32.jpg"
+                                    alt="Avatar"
+                                />
+                                <img
+                                    className="w-8 h-8 rounded-full border-2 border-white -ml-3"
+                                    src="https://randomuser.me/api/portraits/men/32.jpg"
+                                    alt="Avatar"
+                                />
+                                <div className="w-8 h-8 rounded-full bg-gray-300 text-gray-700 flex items-center justify-center text-sm font-semibold border-2 border-white -ml-3">
+                                    +5
+                                </div>
+                            </td>
+
                             <td className="px-6 py-4">
                             <button className="text-xl" onClick={() => {
                                     setMenuId(openMenuId === project.id ? null : project.id);

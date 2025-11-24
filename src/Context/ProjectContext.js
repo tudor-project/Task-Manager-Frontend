@@ -22,9 +22,9 @@ const statusMap = {
     3: {text:"Canceled.", color:"bg-red-100 text-red-800"},
 }
 const priorityMap = {
-    0: {color:"bg-green-500"},
-    1: {color:"bg-yellow-500"},
-    2: {color:"bg-red-500"}
+    0: {text: "low", color:"bg-green-500"},
+    1: {text: "medium",color:"bg-yellow-500"},
+    2: {text: "high",color:"bg-red-500"}
 }
 
 export const ProjectProvider = ({children}) => {
@@ -34,8 +34,8 @@ export const ProjectProvider = ({children}) => {
     const [errors, setErrors] = useState({});
     const navigate = useNavigate();
     const [openMenuId, setMenuId] = useState(null);
-    // const [token, setToken] = useState(null);
     const token = localStorage.getItem("token");
+    const [toast, setToast] = useState(null);
 
     const onChange = (e) => {
         const {name, value} = e.target;
@@ -105,6 +105,11 @@ export const ProjectProvider = ({children}) => {
             if (e.response.status === 422){
                 setErrors(e.response.data.errors);
             }
+            if (e.response.status === 403){
+                setToast("Action forbidden!");
+
+                setTimeout(() => setToast(null), 3000);
+            }
         }
     }
 
@@ -112,11 +117,19 @@ export const ProjectProvider = ({children}) => {
         if(!window.confirm("Are yoou sure?")){
             return;
         }
-        await axios.delete("projects/" + id, {
-            headers: {
-                Authorization: `Bearer ${token}`
+        try{
+            await axios.delete("projects/" + id, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+        } catch (e) {
+            if(e.response.status === 403){
+                setToast("Action forbidden!");
+
+                setTimeout(() => setToast(null), 3000);
             }
-        });
+        }
         getProjects();
     }
 
@@ -139,7 +152,8 @@ export const ProjectProvider = ({children}) => {
             openMenuId,
             setMenuId,
             statusMap,
-            priorityMap
+            priorityMap,
+            toast
         }}
     >
         {children}

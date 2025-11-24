@@ -23,7 +23,7 @@ export const ProjectCreate = () => {
             <form onSubmit={storeProject} className="max-w-md mx-auto p-4 bg-white shadow-md rounded-sm">
                 <div className="space-y-6">
                     <div className="mb-4">
-                        <label htmlFor="title" className="block mb-2 text-sm font-medium">Name</label>
+                        <label htmlFor="title" className="block mb-2 text-sm font-medium">Title</label>
                         <input type="text" name="title" value={formValues["title"]} onChange={onChange}
                                className="border border-gray-300 text-gray-900 text-sm rounded-md block w-full p-2"/>
                         {errors.title && <span className="text-sm text-red-400">{errors.title[0]}</span>}

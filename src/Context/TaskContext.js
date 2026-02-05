@@ -29,6 +29,8 @@ export const TaskProvider = ({children}) => {
             });
             setTasks(apiTasks.data.data);
         } else {
+            localStorage.removeItem("token");
+            localStorage.removeItem("user");
             navigate("/login");
         }
     }

@@ -43,7 +43,6 @@ export const ProjectProvider = ({children}) => {
     };
 
     const getProjects = async () => {
-
         if (token) {
             const apiProjects = await axios.get("projects", {
                 headers: {
@@ -52,9 +51,10 @@ export const ProjectProvider = ({children}) => {
             });
             setProjects(apiProjects.data.data);
         } else {
+            localStorage.removeItem("token");
+            localStorage.removeItem("user");
             navigate("/login");
         }
-
     };
 
     const getSingleProject = async (id) => {
